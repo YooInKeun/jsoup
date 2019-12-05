@@ -1,5 +1,8 @@
 package org.jsoup;
 
+import org.jsoup.helper.CheckRobotsAdapter;
+import org.jsoup.helper.CheckRobotsAllowed;
+import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
@@ -339,6 +342,13 @@ public interface Connection {
      * Common methods for Requests and Responses
      * @param <T> Type of Base, either Request or Response
      */
+    
+    /*---------- CUSTOM START----------*/
+    
+    public Connection isAllowed(String botname);
+
+    /*---------- CUSTOM END ----------*/
+    
     interface Base<T extends Base> {
 
         /**

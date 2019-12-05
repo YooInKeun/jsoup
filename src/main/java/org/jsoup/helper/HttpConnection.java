@@ -1,5 +1,7 @@
 package org.jsoup.helper;
 
+import org.jsoup.helper.CheckRobotsAllowed;
+
 import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.UncheckedIOException;
@@ -320,7 +322,29 @@ public class HttpConnection implements Connection {
         req.postDataCharset(charset);
         return this;
     }
+    
+    
+    /*---------- CUSTOM START----------*/
+    
+    private CheckRobotsAllowed checkbot;
+    
+    public Connection isAllowed(String botname) {
+    	
+    	checkbot = new CheckRobotsAdapter();
+    	checkbot.set_userAgent(botname);
+    	
+    	if( checkbot.check(req.url()) ) {
+			return this;
+		}
+		else {
+			Validate.fail("Robots.txt don't allow you");
+		}
 
+    	return this;
+    }
+
+    /*---------- CUSTOM END ----------*/
+    
     @SuppressWarnings({"unchecked"})
     private static abstract class Base<T extends Connection.Base> implements Connection.Base<T> {
         URL url;
